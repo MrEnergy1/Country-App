@@ -50,14 +50,14 @@ function SearchBar() {
 
   return (
     <div
-      className={`${
+      className={`pt-20 ${
         isMode ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
       <div className="bg-white flex h-15 top-15 fixed w-full text-black">
         <div className="bg-white flex-col md:flex md:flex-row w-full justify-between items-center">
           <div className="flex items-center md:pl-10 text-md h-full w-full">
-            <b>Total Population:</b>
+            <b className="border-b-4 border-yellow-400">Total Population:</b>
             <span className="ml-2">
               {totalPopulation?.toLocaleString()}
             </span>
@@ -79,7 +79,7 @@ function SearchBar() {
           <div className="flex h-full w-full justify-evenly items-center">
             <div className="relative group">
               <div
-                className={`border w-15 flex items-center justify-center py-1 rounded-2xl cursor-pointer h-12 ${
+                className={`border w-13 flex items-center justify-center py-1 rounded-md cursor-pointer h-10 ${
                   isMode
                     ? "bg-gray-800 border-gray-600 hover:bg-gray-700"
                     : "bg-white border-gray-400 hover:bg-gray-200"
@@ -88,7 +88,7 @@ function SearchBar() {
                 <img
                   src={colorWheel}
                   alt="color wheel"
-                  className="w-auto h-full flex"
+                  className="w-8 h-8 flex"
                 />
               </div>
               <ul

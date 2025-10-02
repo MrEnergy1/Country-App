@@ -8,7 +8,7 @@ import CountryDetails from "../components/feature/CountryDetails.jsx";
 function NavigationBar() {
   return (
     <div>
-      <div className="bg-yellow-500 flex h-15 items-center justify-evenly text-lg fixed w-[100%]">
+      <div className="bg-yellow-500 flex h-15 items-center justify-evenly text-lg fixed w-full top-0">
         <nav className="space-x-4">
           <Link to="/"><span className="font-semibold text-3xl font-serif">Countries App</span></Link>
         </nav>
