@@ -24,12 +24,6 @@ function NavigationBar() {
             <Link to="/" className="hover:underline hover:text-yellow-200 transition-colors">
               Home
             </Link>
-            <Link to="/loading" className="hover:underline hover:text-yellow-200 transition-colors">
-              Loading
-            </Link>
-            <Link to="/error" className="hover:underline hover:text-yellow-200 transition-colors">
-              Error
-            </Link>
           </nav>
 
           <div className="md:hidden">
