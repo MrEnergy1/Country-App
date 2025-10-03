@@ -1,29 +1,18 @@
 function LoadingPage() {
   return (
-    <div className="flex flex-col items-center bg-blue-100 h-[100vh] justify-center">
-      <div className="border-t-yellow-400 border-4 border-yellow-100 w-20 h-20 animate-spin rounded-full"></div>
-      <h2 className=" mt-4 text-4xl flex items-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 px-4">
+      <div className="w-20 h-20 border-4 border-yellow-200 border-t-yellow-500 rounded-full animate-spin mb-6"></div>
+
+      <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-semibold flex items-center">
         Loading
-        <span
-          className="ml-2 animate-bounce"
-          style={{ animationDelay: "0.3s" }}
-        >
-          .
-        </span>
-        <span
-          className="ml-2 animate-bounce"
-          style={{ animationDelay: "0.4s" }}
-        >
-          .
-        </span>
-        <span
-          className="ml-2 animate-bounce"
-          style={{ animationDelay: "0.5s" }}
-        >
-          .
-        </span>
+        <span className="ml-2 animate-bounceDot">.</span>
+        <span className="ml-2 animate-bounceDot delay-200">.</span>
+        <span className="ml-2 animate-bounceDot delay-400">.</span>
       </h2>
+
+      <div className="absolute inset-0 bg-blue-100 opacity-20 animate-pulse-slow -z-10"></div>
     </div>
   );
 }
+
 export default LoadingPage;

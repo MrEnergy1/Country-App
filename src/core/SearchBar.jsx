@@ -12,17 +12,14 @@ import { setIsMode } from "../Hooks/storeSlice.js";
 
 function SearchBar() {
   const { data: allCountries, error, isLoading } = useCountry();
-  console.log(allCountries, error, isLoading);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [sortByPopulation, setSortByPopulation] = useState(false);
-  
+
   const dispatch = useDispatch();
   const isMode = useSelector((state) => state.store.isMode);
 
   if (error) return <ErrorPage />;
   if (isLoading) return <LoadingPage />;
-
 
   const toggleMode = () => {
     dispatch(setIsMode(!isMode));
@@ -37,9 +34,7 @@ function SearchBar() {
       country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
-      if (sortByPopulation) {
-        return a.population - b.population;
-      }
+      if (sortByPopulation) return a.population - b.population;
       return a.name.common.localeCompare(b.name.common);
     });
 
@@ -50,165 +45,146 @@ function SearchBar() {
 
   return (
     <div
-      className={`pt-20 ${
+      className={`${
         isMode ? "bg-black text-white" : "bg-white text-black"
-      }`}
+      } pt-24 px-4 sm:px-8 lg:px-16`}
     >
-      <div className="bg-white flex h-15 top-15 fixed w-full text-black">
-        <div className="bg-white flex-col md:flex md:flex-row w-full justify-between items-center">
-          <div className="flex items-center md:pl-10 text-md h-full w-full">
-            <b className="border-b-4 border-yellow-400">Total Population:</b>
-            <span className="ml-2">
-              {totalPopulation?.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="flex h-full w-[80%] items-center justify-center">
-            <button
-              onClick={toggleMode}
-              className={`border p-1 h-10 w-12 flex items-center justify-center rounded-md text-md animate-pulse hover:animate-none cursor-pointer ${
-                isMode
-                  ? "hover:bg-gray-700 hover:text-white"
-                  : "hover:bg-gray-200 hover:text-black"
-              }`}
-            >
-              {isMode ? <SunMedium /> : <Moon />}
-            </button>
-          </div>
-
-          <div className="flex h-full w-full justify-evenly items-center">
-            <div className="relative group">
-              <div
-                className={`border w-13 flex items-center justify-center py-1 rounded-md cursor-pointer h-10 ${
-                  isMode
-                    ? "bg-gray-800 border-gray-600 hover:bg-gray-700"
-                    : "bg-white border-gray-400 hover:bg-gray-200"
-                }`}
-              >
-                <img
-                  src={colorWheel}
-                  alt="color wheel"
-                  className="w-8 h-8 flex"
-                />
-              </div>
-              <ul
-                className={`absolute left-0 mt-2 w-60 border rounded-lg shadow-lg transition-all duration-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible ${
-                  isMode
-                    ? "bg-gray-800 border-gray-700 text-white"
-                    : "bg-white border-gray-300 text-black"
-                }`}
-              >
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-red-500"></div>
-                  Highly High Over-Populated
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-red-300"></div>
-                  High Over-populated
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-yellow-500"></div>
-                  Highly Medium Population
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-yellow-300"></div>
-                  Medium Population
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-green-500"></div>
-                  Highly Small Population
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-green-300"></div>
-                  Small Population
-                </li>
-                <li className="colorCode">
-                  <div className="border-4 mr-1 border-black"></div>
-                  Zero Population
-                </li>
-              </ul>
-            </div>
-
-            <button
-              className={`p-2 border rounded flex items-center justify-evenly w-50 ${
-                isMode
-                  ? "bg-gray-800 border-gray-600 text-white hover:bg-gray-700"
-                  : "bg-white border-gray-400 text-black hover:bg-gray-100"
-              }`}
-              onClick={handleSortByPopulation}
-            >
-              <p className="font-semibold">Sort By Population</p>
-              <ArrowDownAZ />
-            </button>
-
-            <input
-              type="text"
-              className={`border text-[18px] h-10 rounded-md px-3 flex items-center transition duration-150 ease-in-out ${
-                isMode
-                  ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
-                  : "bg-gray-200 border-gray-400 text-black placeholder-gray-600"
-              }`}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search countries..."
-            />
-          </div>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div className="flex items-center text-lg md:text-xl font-semibold border-b-4 border-yellow-400">
+          Total Population:{" "}
+          <span className="ml-2">{totalPopulation?.toLocaleString()}</span>
         </div>
+
+        <button
+          onClick={toggleMode}
+          className={`flex items-center justify-center p-2 rounded-md transition-colors duration-200 hover:scale-105 ${
+            isMode
+              ? "bg-gray-800 hover:bg-gray-700 text-white"
+              : "bg-gray-200 hover:bg-gray-300 text-black"
+          }`}
+        >
+          {isMode ? <SunMedium size={24} /> : <Moon size={24} />}
+        </button>
+
+        <div className="relative group">
+          <div
+            className={`flex items-center justify-center p-2 rounded-md cursor-pointer transition-colors duration-200 ${
+              isMode
+                ? "bg-gray-800 hover:bg-gray-700"
+                : "bg-white hover:bg-gray-200"
+            }`}
+          >
+            <img src={colorWheel} alt="color wheel" className="w-8 h-8" />
+          </div>
+          <ul
+            className={`absolute left-0 mt-2 w-56 border rounded-lg shadow-lg transition-all duration-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible z-50 ${
+              isMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
+          >
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-red-500"></div>Highly
+              High Over-Populated
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-red-300"></div>High
+              Over-Populated
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-yellow-500"></div>
+              Highly Medium Population
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-yellow-300"></div>
+              Medium Population
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-green-500"></div>
+              Highly Small Population
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-green-300"></div>
+              Small Population
+            </li>
+            <li className="flex items-center px-2 py-1">
+              <div className="w-4 h-4 mr-2 border-4 border-black"></div>Zero
+              Population
+            </li>
+          </ul>
+        </div>
+
+        <button
+          onClick={handleSortByPopulation}
+          className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors duration-200 hover:scale-105 ${
+            isMode
+              ? "bg-gray-800 hover:bg-gray-700 text-white"
+              : "bg-white hover:bg-gray-100 text-black border border-gray-400"
+          }`}
+        >
+          <ArrowDownAZ size={20} />
+          <span className="font-semibold">Sort By Population</span>
+        </button>
+
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search countries..."
+          className={`px-3 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200 w-full md:w-60 ${
+            isMode
+              ? "bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+              : "bg-gray-200 border-gray-400 text-black placeholder-gray-600"
+          }`}
+        />
       </div>
 
-      <div className="mt-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCountries?.map((country, index) => (
           <div
             key={index}
-            className={`p-4 mb-5 rounded flex items-center border ${
-              isMode ? "border-gray-700" : "border-gray-300"
+            className={`p-4 rounded-lg border shadow-md hover:shadow-xl transition-shadow duration-200 flex flex-col md:flex-row items-center gap-4 ${
+              isMode
+                ? "border-gray-700 bg-gray-900"
+                : "border-gray-300 bg-white"
             }`}
           >
             <img
               src={country.flags.svg}
               alt={country.name.common}
-              className="w-32 h-20 object-cover mt-2"
+              className="w-full md:w-32 h-20 object-cover rounded-md"
             />
 
-            <div className="flex ml-20 h-20 w-[90%] items-center justify-evenly">
-              <div className="w-full h-full flex justify-center mr-5">
-                <Link
-                  to={`/country/${country.name.common}`}
-                  className="w-full hover:underline"
-                >
-                  <h2 className="text-3xl font-mono font-semibold text-yellow-600 flex text-center items-center justify-center cursor-pointer h-full w-auto">
-                    {country.name.common}
-                  </h2>
-                </Link>
-              </div>
+            <div className="flex-1 flex flex-col justify-between w-full gap-2">
+              <Link
+                to={`/country/${country.name.common}`}
+                className="hover:underline"
+              >
+                <h2 className="text-xl sm:text-2xl font-semibold text-yellow-600">
+                  {country.name.common}
+                </h2>
+              </Link>
 
               <div
-                className="w-full h-13 bg-cover bg-bottom flex items-center"
+                className="w-full h-12 bg-cover bg-bottom flex items-center rounded-md overflow-hidden"
                 style={{ backgroundImage: `url(${map})` }}
               >
-                <p className="text-2xl h-full w-full flex items-center">
-                  <span className="font-semibold bg-white/50 h-full w-[50%] flex items-center justify-center font-serif text-black">
-                    Region
-                  </span>
-                  <span className="font-medium bg-gray-200/50 h-full w-[50%] flex items-center justify-center font-serif text-black">
-                    {country.region}
-                  </span>
-                </p>
+                <span className="flex-1 text-center font-semibold bg-white/50">
+                  {country.region}
+                </span>
               </div>
 
-              <div className="w-full h-13 flex rounded-full overflow-hidden mx-4 text-xl items-center justify-center">
-                <p className="h-full w-[80%] flex items-center rounded-4xl overflow-hidden">
-                  <span
-                    className={`font-semibold h-full flex items-center px-3 ${getPopulationColor(
-                      country.population
-                    )}`}
-                  >
-                    Population
-                  </span>
-                  <span className="px-3 h-full w-full flex items-center justify-center">
-                    {country.population.toLocaleString()}
-                  </span>
-                </p>
+              <div className="w-full h-12 flex items-center rounded-full overflow-hidden">
+                <span
+                  className={`flex-1 text-center font-semibold ${getPopulationColor(
+                    country.population
+                  )} px-2`}
+                >
+                  Population
+                </span>
+                <span className="flex-1 text-center">
+                  {country.population.toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
